@@ -1,4 +1,4 @@
-# Demo
+# Stacks Trust Line Terminal Demo
 
 https://stackstrustlineterminal.netlify.app/
 
