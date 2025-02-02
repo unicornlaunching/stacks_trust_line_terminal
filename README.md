@@ -1,6 +1,6 @@
 # Stacks Trust Line Terminal Demo
 
-![Stacks_Trust_Line_Terminal](Stacks_Trust_Lines.png)
+![Stacks_Trust_Line_Terminal](Stacks_Trust_Line.png)
 
 https://stackstrustlineterminal.netlify.app/
 
