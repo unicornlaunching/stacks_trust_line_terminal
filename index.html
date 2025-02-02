@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stacks Trust Line Simulator</title>
+    <style>
+        body {
+            background: #1a1a1a;
+            color: #33ff33;
+            font-family: monospace;
+            margin: 0;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+        }
+
+        #terminal-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #terminal {
+            border: 1px solid #33ff33;
+            height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        #input-line {
+            display: flex;
+            gap: 10px;
+        }
+
+        #cmd-input {
+            background: transparent;
+            border: 1px solid #33ff33;
+            color: #33ff33;
+            flex-grow: 1;
+            font-family: monospace;
+            padding: 5px;
+        }
+
+        .prompt {
+            color: #33ff33;
+            margin-bottom: 5px;
+        }
+
+        .response {
+            color: #cccccc;
+            margin-bottom: 10px;
+            white-space: pre-wrap;
+        }
+
+        .error {
+            color: #ff3333;
+        }
+
+        #command-reference {
+            border: 1px solid #33ff33;
+            padding: 15px;
+            height: fit-content;
+        }
+
+        .command-category {
+            margin-bottom: 20px;
+        }
+
+        .category-title {
+            color: #33ff33;
+            font-weight: bold;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .category-title:hover {
+            text-decoration: underline;
+        }
+
+        .command-list {
+            margin-left: 15px;
+        }
+
+        .command-item {
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+
+        .command-syntax {
+            color: #cccccc;
+            font-size: 0.8em;
+            margin-left: 15px;
+        }
+
+        .example {
+            color: #888888;
+            font-size: 0.8em;
+            margin-left: 15px;
+            font-style: italic;
+        }
+
+        pre.help-text {
+            color: #cccccc;
+            margin: 0;
+            white-space: pre;
+            font-family: monospace;
+            line-height: 1.2;
+        }
+
+        #terminal pre {
+            margin: 0;
+            white-space: pre;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div id="terminal-container">
+        <div id="terminal"></div>
+        <div id="input-line">
+            <input type="text" id="cmd-input" autofocus>
+        </div>
+    </div>
+
+    <div id="command-reference">
+        <h3 style="margin-top: 0;">Command Reference</h3>
+        
+        <div class="command-category">
+            <div class="category-title">🔷 Account Management</div>
+            <div class="command-list">
+                <div class="command-item">
+                    create_account &lt;address&gt; [balance]
+                    <div class="command-syntax">Creates a new account</div>
+                    <div class="example">Ex: create_account alice 1000</div>
+                </div>
+                <div class="command-item">
+                    use_account &lt;address&gt;
+                    <div class="command-syntax">Switch to an account</div>
+                    <div class="example">Ex: use_account alice</div>
+                </div>
+                <div class="command-item">
+                    current_account
+                    <div class="command-syntax">Show current account</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="command-category">
+            <div class="category-title">💫 Trust Lines</div>
+            <div class="command-list">
+                <div class="command-item">
+                    create_trustline &lt;to&gt; &lt;currency&gt; &lt;limit&gt;
+                    <div class="command-syntax">Create trust line from current account</div>
+                    <div class="example">Ex: create_trustline bob USD 1000</div>
+                </div>
+                <div class="command-item">
+                    show_trustlines
+                    <div class="command-syntax">Show trust lines for current account</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="command-category">
+            <div class="category-title">🔄 Batch Operations</div>
+            <div class="command-list">
+                <div class="command-item">
+                    batch_create_accounts &lt;count&gt;
+                    <div class="command-syntax">Create multiple accounts</div>
+                    <div class="example">Ex: batch_create_accounts 100</div>
+                </div>
+                <div class="command-item">
+                    batch_create_trustlines &lt;from_pattern&gt; &lt;to_pattern&gt; &lt;currency&gt; &lt;limit&gt; &lt;count&gt;
+                    <div class="command-syntax">Create multiple trust lines</div>
+                    <div class="example">Ex: batch_create_trustlines account* account* USD 1000 10</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="command-category">
+            <div class="category-title">💰 Payments</div>
+            <div class="command-list">
+                <div class="command-item">
+                    send_payment &lt;to&gt; &lt;currency&gt; &lt;amount&gt;
+                    <div class="command-syntax">Send payment through trust line</div>
+                    <div class="example">Ex: send_payment bob USD 100</div>
+                </div>
+                <div class="command-item">
+                    check_balance &lt;currency&gt;
+                    <div class="command-syntax">Check balance for currency</div>
+                    <div class="example">Ex: check_balance USD</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="command-category">
+            <div class="category-title">⚙️ Utility</div>
+            <div class="command-list">
+                <div class="command-item">
+                    help
+                    <div class="command-syntax">Show help message</div>
+                </div>
+                <div class="command-item">
+                    clear
+                    <div class="command-syntax">Clear terminal</div>
+                </div>
+                <div class="command-item">
+                    list_accounts
+                    <div class="command-syntax">List all accounts</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/state.js"></script>
+    <script src="js/trustlines.js"></script>
+    <script src="js/payment.js"></script>
+    <script src="js/terminal.js"></script>
+</body>
+</html> 
