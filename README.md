@@ -1,5 +1,7 @@
 # Stacks Trust Line Terminal Demo
 
+![Stacks_Trust_Line_Terminal](Trust_Lines_Stacks.png)
+
 https://stackstrustlineterminal.netlify.app/
 
 Here are 20 potential use cases for trust lines, with headings and subheadings:
